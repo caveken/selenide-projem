@@ -1,0 +1,10 @@
+#    In Selenide framework, we can find web elements with both Selenide OR Selenium locators.
+#  $ character => used to find single element
+#  $ character => return SelenideElement
+#       1st way=> public SelenideElement inputField = $(cssSelector:"[name='q']");
+#       2nd way=> public SelenideElement inputField = $(By.name=("q"));  => $(By) -> 8 locators
+#  $$ character => used to find multiple element
+#  $$ character => returns List<SelenideElement>
+#  $$ character => returns also ElementsCollection
+
+
