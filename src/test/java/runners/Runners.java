@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
         monochrome = true,
         features = "src/test/resources/features",
         glue = "stepdefinitions",
-        tags = "@football",//2 tagi ayni anada calistirmak isterseniz "@gp1 or @gp2" seklinde yazariz
+        tags = "@iframe",//2 tagi ayni anada calistirmak isterseniz "@gp1 or @gp2" seklinde yazariz
         dryRun = false
 )
 
