@@ -3,13 +3,13 @@ package stepdefinitions;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
 import pages.TestCenterPage;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.sleep;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.url;
 
 public class TestCenterStepDefinitions {
@@ -100,25 +100,93 @@ public class TestCenterStepDefinitions {
 //        Assert.assertTrue(testCenterPage.sonuc.getText().contains(arg0));//JUNIT ILE DE ASSERT EILEBILIR.
 
     }
+
     @And("switch to frame {int}")
     public void switchToFrame(int frame) {
-        switchTo().frame(frame-1);//1-1 = 0. index = 1. iframe
+        switchTo().frame(frame - 1);//1-1 = 0. index = 1. iframe
     }
+
     @And("kullanici back to techproeducation.com linkine tiklar")
     public void kullaniciBackToTechproeducationComLinkineTiklar() throws InterruptedException {
         testCenterPage.techProLink.click();
         System.out.println("TechPro Linkine Tiklandi ve Yeni pencere acildi");
         Thread.sleep(3000);
 //        System.out.println("SAYFA URL I : "+ WebDriverRunner.url());//DRIVER HALA TEST PAGE DE
-        System.out.println("SAYFA URL I : "+ url());//DRIVER HALA TEST PAGE DE
-    }
-    @And("switch to window {int}")
-    public void switchToWindow(int targetWindow) throws InterruptedException {
-        switchTo().window(targetWindow-1, Duration.ofSeconds(5));// INDEX. Duration.ofSeconds(5)) zorunlu degil
-        System.out.println("Yeni pencereye gecil yapildi");
-        Thread.sleep(3000);
-        System.out.println("YENI SAYFA URL I : "+url());//YENI SAYFA URL NI VERECEKDIR
+        System.out.println("SAYFA URL I : " + url());//DRIVER HALA TEST PAGE DE
     }
 
+    @And("switch to window {int}")
+    public void switchToWindow(int targetWindow) throws InterruptedException {
+        switchTo().window(targetWindow - 1, Duration.ofSeconds(5));// INDEX. Duration.ofSeconds(5)) zorunlu degil
+        System.out.println("Yeni pencereye gecil yapildi");
+        Thread.sleep(3000);
+        System.out.println("YENI SAYFA URL I : " + url());//YENI SAYFA URL NI VERECEKDIR
+    }
+
+    @And("kullanici source elementi target elementine surukler")
+    public void kullaniciSourceElementiTargetElementineSurukler() {
+//        SELENIUM
+//        Actions actions = new Actions();
+//        SELENIDE KISACA actions()
+
+//        1. dragAndDrop
+        actions()
+                .dragAndDrop(testCenterPage.kaynak,testCenterPage.hedef)//kaynak elementi hedefe surukle
+                .build()//baglantiyi olustur(OPTIONAL)
+                .perform();//verilen komutlari yap(ZORUNLU)
+    }
+
+
+    @And("kullanici source elementini {int} by {int} koordinatlarina surukler")
+    public void kullaniciSourceElementiniByKoordinatlarinaSurukler(int arg0, int arg1) {
+        actions()
+                .dragAndDropBy(testCenterPage.kaynak,arg0,arg1)
+                .build()
+                .perform();
+    }
+
+    @And("verilen coordinatlara {int} by {int} suruklendigini dogrular")
+    public void verilenCoordinatlaraBySuruklendiginiDogrular(int arg0, int arg1) {
+        String styleValue = testCenterPage.kaynak.getAttribute("style");
+        System.out.println(styleValue);
+        Assert.assertTrue(styleValue.contains(String.valueOf(arg0))&&styleValue.contains(String.valueOf(arg1)));
+    }
+
+    @And("start butonuna tiklar")
+    public void startButonunaTiklar() {
+        testCenterPage.startButton.click();
+    }
+
+    @Then("kullanici {string} metnini dogrular")
+    public void kullaniciMetniniDogrular(String arg0) {
+//        Assert.assertEquals(arg0,testCenterPage.helloWorld.getText());//FAIL. WAIT PROBLEMI.
+
+//        1. WebDriverWait
+//        WebDriverWait wait = new WebDriverWait(WebDriverRunner.getWebDriver(),Duration.ofSeconds(10));
+//        wait.until(ExpectedConditions.visibilityOf(testCenterPage.helloWorld));//EXPLICIT WAIT
+//        Assert.assertEquals(arg0,testCenterPage.helloWorld.getText());//PASS. EXPLICIT WAIT ILE PROBLEM COZULDU
+
+//        2. Selenide Wait
+//        testCenterPage.helloWorld.should(visible,Duration.ofSeconds(10));//SELENIDE WAIT
+//        Assert.assertEquals(arg0,testCenterPage.helloWorld.getText());
+
+
+//        3. Selenide Wait
+        testCenterPage.helloWorld.shouldHave(text("Hello World!"),Duration.ofSeconds(10));//SELENIDE WAIT
+    }
+
+
+    @And("google image goruntusunu al")
+    public void googleImageGoruntusunuAl() {
+        testCenterPage.googleImage.screenshot();
+    }
+
+    @And("footer elementi gorunur sekilde goster")
+    public void footerElementiGorunurSekildeGoster() {
+//        testCenterPage.amazonFooter
+        executeJavaScript("arguments[0].scrollIntoView(true);",testCenterPage.amazonFooter);
+
+
+    }
 
 }

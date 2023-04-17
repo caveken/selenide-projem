@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" time="11.767" tests="1" skipped="0" failures="0" errors="0">
-<testcase classname="iframe _ windows" name="TC01 iframe ve window" time="11.484">
+<testsuite name="Cucumber" time="5.65" tests="1" skipped="0" failures="0" errors="0">
+<testcase classname="js executor" name="js executor" time="5.266">
 <system-out><![CDATA[
-Given kullanici "https://testcenter.techproeducation.com/index.php?page=iframe" adresine gider.passed
-And switch to frame 1.......................................................passed
-And kullanici back to techproeducation.com linkine tiklar...................passed
-And switch to window 2......................................................passed
+Given kullanici "https://www.amazon.com/" adresine gider....................passed
+And tum ekran goruntusunu alir..............................................passed
+And footer elementi gorunur sekilde goster..................................passed
 Then sayfayi acik tutar.....................................................passed
 ]]></system-out>
 </testcase>
